@@ -10,3 +10,17 @@ def fetch_all_semantic_memory():
             {"_id": 0}
         )
     )
+
+def fetch_semantic_memory_by_tags(tags: list[str]):
+    if not tags:
+        return []
+
+    return list(
+        mongo_db.semantic_memory.find(
+            {
+                "category": "event",
+                "tags": {"$in": tags}
+            },
+            {"_id": 0}
+        )
+    )

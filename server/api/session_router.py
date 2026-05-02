@@ -3,6 +3,8 @@
 from fastapi import APIRouter, HTTPException
 from services.state_memory_service import flush_session_state
 from services.session_state_service import get_all_session_states
+from services.short_memory_service import clear_short_memory
+from services.npc_relation_context_service import clear_npc_relation_context
 
 router = APIRouter(prefix="/session", tags=["session"])
 
@@ -15,7 +17,12 @@ def read_session_states():
 @router.post("/end")
 def end_session(player_id: str, npc_id: str):
     try:
+        print("END SESSION:", player_id, npc_id)
+
         saved_state = flush_session_state(player_id, npc_id)
+
+        clear_short_memory(player_id, npc_id)
+        clear_npc_relation_context(player_id, npc_id)
 
         if saved_state is None:
             return {"message": "저장할 세션 상태가 없습니다."}

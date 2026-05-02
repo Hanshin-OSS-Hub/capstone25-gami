@@ -14,9 +14,9 @@ from services.session_state_service import (
 )
 
 
-# 대화 시작 시 사용할 랜덤 mood(기분) 값 생성 (-5 ~ 5)
+# 대화 시작 시 사용할 랜덤 mood(기분) 값 생성 (-20 ~ 20)
 def generate_random_mood():
-    return random.randint(-5, 5)
+    return random.randint(-20, 20)
 
 
 # 세션 상태가 없으면 Neo4j에서 읽어와 FastAPI 메모리에 올림

@@ -107,6 +107,7 @@ def ensure_default_npc():
             print("Neo4j에 NPC 노드가 없어 기본 NPC를 생성")
 
             session.run(create_query)
+            session.run(create_relation_query)
 
         else:
 
