@@ -1,5 +1,4 @@
 # LLM B가 최종 NPC 응답을 생성
-
 from openai import OpenAI
 from core.config import OPENAI_API_KEY
 from services.semantic_memory_service import get_semantic_memory_text
@@ -92,7 +91,6 @@ def generate_npc_response(
 
     system_prompt = (
         f"You are an NPC in a game.\n"
-        f"Do not end responses in plain sentence form unless absolutely necessary.\n"
         f"Only provide responses that fit the established world setting.\n"
         f"If a topic does not align with the world setting, deflect or reinterpret it in a way that remains consistent with the world.\n\n"
 
@@ -116,29 +114,34 @@ def generate_npc_response(
         f"The NPC is currently {mood_text}.\n"
         f"The NPC thinks of the player as: {state_memory.get('view_of_player','')}\n\n"
 
-        f"Semantic memory:\n"
+        f"World memory:\n"
         f"{semantic_memory_text}\n\n"
 
-        f"Analysis result of player's latest message:\n"
-        f"- Intent: {analysis_result.get('intent', 'unknown')}\n"
-        f"- Emotion: {analysis_result.get('emotion', 'neutral')}\n"
-        f"- Affinity delta: {analysis_result.get('affinity_delta', 0)}\n\n"
-
-        f"Instructions:\n"
-        f"- Reply as the NPC naturally.\n"
-        f"- Reflect the NPC's speech style and personality.\n"
-        f"- Reflect the NPC's current state toward the player.\n"
-        f"- Do not explain the state values directly unless necessary.\n"
-        f"- Stay consistent with the semantic memory."
-
-        f"Recent conversation:\n"
-        f"{recent_dialogue_text}\n\n"
+        f"Relevant event memory:\n"
+        f"{event_memory_text}\n\n"
 
         f"Mentioned NPC relationship context:\n"
         f"{npc_relation_context_text}\n\n"
 
-        f"Relevant event memory:\n"
-        f"{event_memory_text}\n\n"
+        f"Recent conversation:\n"
+        f"{recent_dialogue_text}\n\n"
+
+        f"Latest player message analysis:\n"
+        f"- Intent: {analysis_result.get('intent', 'unknown')}\n"
+        f"- Emotion: {analysis_result.get('emotion', 'neutral')}\n"
+        f"- Affinity delta: {analysis_result.get('affinity_delta', 0)}\n\n"
+
+        f"Response rules:\n"
+        f"- Reply as the NPC naturally.\n"
+        f"- Reflect the NPC's speech style and personality.\n"
+        f"- Reflect the NPC's current state toward the player.\n"
+        f"- Use relevant event memory only when it is related to the current conversation.\n"
+        f"- Use mentioned NPC relationship context only when the player asks about or refers to that NPC.\n"
+        f"- Do not directly mention numeric state values.\n"
+        f"- Do not invent facts that conflict with the world memory.\n"
+        f"- Do not always end your response with a question.\n"
+        f"- Ask questions only when it feels natural for the NPC.\n"
+        f"- Asking a question is optional, not required."
     )
 
     print("STATE MEMORY:", state_memory)
