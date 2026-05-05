@@ -1,5 +1,4 @@
 # Neo4j에서 state memory를 읽고 저장하는 쿼리를 담당
-
 from core.neo4j import driver
 
 # Player-NPC 관계에서 state memory를 읽어옴
@@ -7,7 +6,7 @@ def load_state_memory_from_neo4j(player_id: str, npc_id: str):
     query = """
     MATCH (n:NPC {id: $npc_id})
     MERGE (p:Player {id: $player_id})
-    MERGE (p)-[r:KNOWS]->(n)
+    MERGE (n)-[r:KNOWS]->(p)
     ON CREATE SET
         r.affinity = 0,
         r.trust = 0,
@@ -63,7 +62,7 @@ def save_state_memory_to_neo4j(
     query = """
     MATCH (n:NPC {id: $npc_id})
     MERGE (p:Player {id: $player_id})
-    MERGE (p)-[r:KNOWS]->(n)
+    MERGE (n)-[r:KNOWS]->(p)
     SET
         r.affinity = $affinity,
         r.trust = $trust,
