@@ -1,3 +1,4 @@
+# 대화 처리 총괄적 관리
 from services.analysis_service import analyze_player_text
 from services.state_memory_service import ensure_session_state, update_session_state
 from services.response_service import generate_npc_response
@@ -14,7 +15,7 @@ from services.semantic_memory_service import (
     event_memory_to_text
 )
 
-
+# NPC 상태값(affinity, trust, mood)을 -100 ~ 100 범위로 제한
 def clamp_state(value, min_value=-100, max_value=100):
     try:
         value = int(value)
@@ -24,6 +25,7 @@ def clamp_state(value, min_value=-100, max_value=100):
     return max(min_value, min(max_value, value))
 
 
+# 플레이어 입력을 바탕으로 전체 대화 흐름(파싱, 관계/이벤트 메모리 조회, 상태 업데이트, NPC 응답 생성, 단기기억 저장) 처리
 def process_dialogue(npc_id: str, player_id: str, user_text: str) -> str:
     state = ensure_session_state(player_id, npc_id)
 

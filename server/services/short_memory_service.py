@@ -1,5 +1,4 @@
-# Redis를 사용해 최근 대화 기록을 저장하고 불러온다.
-
+# Redis를 사용해 최근 대화 기록을 저장 및 로드
 import json
 from core.redis import redis_client
 

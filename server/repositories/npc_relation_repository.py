@@ -1,5 +1,7 @@
+# Neo4j에서 특정 NPC가 제3 NPC에 대해 가진 관계 정보를 조회하는 코드
 from core.neo4j import driver
 
+# 현재 대화 중인 NPC(source NPC)가 제3 NPC(traget)에 대해 가진 관계 정보를 조회
 def load_npc_relations_from_neo4j(source_npc_id: str, target_npc_ids: list[str]):
     if not target_npc_ids:
         return []

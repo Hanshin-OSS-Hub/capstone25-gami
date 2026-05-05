@@ -1,5 +1,4 @@
 # Unity ↔ FastAPI 대화 요청/응답 형식을 정의
-
 from pydantic import BaseModel
 
 # Unity -> FastAPI로 들어오는 대화 요청 형식

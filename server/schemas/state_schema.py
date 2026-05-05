@@ -1,5 +1,4 @@
 # NPC state memory 형식을 정의
-
 from pydantic import BaseModel
 
 class StateMemory(BaseModel):

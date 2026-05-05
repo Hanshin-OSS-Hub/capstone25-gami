@@ -1,5 +1,4 @@
 # 현재 대화 세션 동안 FastAPI 메모리에 state memory를 저장
-
 _session_state_cache = {}
 
 # player_id:npc_id 조합으로 세션 키 제작

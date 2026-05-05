@@ -1,5 +1,4 @@
 # MongoDB 연결 객체 생성
-
 from pymongo import MongoClient
 from core.config import MONGODB_URI, MONGODB_DB_NAME
 

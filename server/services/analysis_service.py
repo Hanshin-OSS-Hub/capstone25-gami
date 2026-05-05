@@ -1,9 +1,11 @@
+# LLM A_1 : 플레이어 발화 분석
 from openai import OpenAI
 from core.config import OPENAI_API_KEY
 import json
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
+# LLM이 반환한 변화량(delta)을 -10 ~ 10 범위로 제한
 def clamp_delta(value, min_value = -10, max_value = 10):
     try:
         value = int(value)
@@ -13,6 +15,7 @@ def clamp_delta(value, min_value = -10, max_value = 10):
     return max(min_value, min(max_value, value))
 
 
+# LLM A_1이 플레이어 발화를 분석해 NPC 상태 변화량(affinity, trust, mood)과 인식 변화를 계산
 def analyze_player_text(user_text: str, state_memory: dict, recent_dialogue_text: str = "") -> dict:
     prompt = f"""
         You are responsible for analyzing how a player's message affects an NPC's internal state.
